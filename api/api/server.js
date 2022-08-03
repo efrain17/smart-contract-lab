@@ -83,10 +83,41 @@ function usingLockAccount() {
 
 }
 
+function deploy() {
+    const contractFile = require('../build/contracts/Storage.json');
+    const account1 = '0x8B37ad61AcAD868a556b719Fd0d3702760381D78'
+    const PRIVATE_KEY = '0x6c187825f68d502467b0b1e4b128d75999963e9e71b4acfb6e70f850c9b1d33c'
+    const privateKey1 = Buffer.from('6c187825f68d502467b0b1e4b128d75999963e9e71b4acfb6e70f850c9b1d33c', 'hex')
+    console.log(privateKey1)
+    const storageContract = new web3.eth.Contract(CONTACT_ABI.CONTACT_ABI);
+
+    const account = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY);
+
+    var tx = {
+        from: account.address,
+        gas: 2000000,
+        data: storageContract.deploy(
+            {
+                data: contractFile.bytecode,
+            }
+        ).encodeABI()
+    };
+    console.log("Account Address:", account.address);
+
+    account.signTransaction(tx).then(signed => {
+        var tran = web3.eth.sendSignedTransaction(signed.rawTransaction)
+        .then(data => console.log(data))
+        console.log("Raw Signed Transaction:", signed.rawTransaction);
+    });
+}
+
+
 async function invokeContractData() {
     const storageContract = new web3.eth.Contract(CONTACT_ABI.CONTACT_ABI, CONTACT_ADDRESS.CONTACT_ADDRESS);
     const userItems = await storageContract.methods.retrieve().call();
     console.log(userItems)
 }
 
-invokeContractData()
+
+//deploy()
+usingLockAccount()
