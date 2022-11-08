@@ -1,5 +1,4 @@
 # Casos de Uso de Smart Contracts
-Repositorio del curso [Casos de Uso de Smart Contracts]() 
 
 1. [Cyberseguridad](https://github.com/platzi/usos-smart-contract/tree/main/Cyberseguridad)
 2. [DigitalAssets](https://github.com/platzi/usos-smart-contract/tree/main/DigitalAssets)
